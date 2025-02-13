@@ -1,7 +1,7 @@
 function submitInput() {
     const input = document.getElementById("userInput").value;
     console.log(input);
-    fetch('http://127.0.0.1:5000/check', {  // Change this to match Flask server port
+    fetch('/check', {  // Ensure this matches the API route in `server.js`
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
