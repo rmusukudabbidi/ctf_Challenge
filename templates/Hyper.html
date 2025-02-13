@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CTF Challenge</title>
+    <script defer src="{{ url_for('static', filename='script.js') }}"></script>
+</head>
+<body>
+    <h2>Enter the secret key:</h2>
+    <input type="text" id="userInput" placeholder="Type here..." />
+    <button onclick="submitInput()">Submit</button>
+    <p id="result"></p>
+</body>
+</html>
