@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Middleware to parse JSON
 
-const FLAG = "CTF{input_length_is_74}";
+const FLAG = "Flag{input_length_is_74}";
 
 // ✅ Serve the HTML file directly (since no templates folder)
 app.get("/", (req, res) => {
@@ -30,7 +30,7 @@ app.post("/check", (req, res) => {
         if (input.length === 74) {
             return res.json({ message: FLAG });
         } else {
-            return res.json({ message: "Try again!" });
+            return res.json({ message: "Length is too short!" });
         }
     } catch (error) {
         return res.status(500).json({ message: "Server error!" });
