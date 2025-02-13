@@ -73,7 +73,10 @@
 
     <script>
         function submitInput() {
-            const input = document.getElementById("userInput").value;
+            const inputElement = document.getElementById("userInput");
+            const resultElement = document.getElementById("result");
+    
+            const input = inputElement.value;
             console.log(input);
             
             fetch('/check', {
@@ -88,13 +91,23 @@
                 return response.json();
             })
             .then(data => {
-                document.getElementById("result").innerText = data.message;
+                resultElement.innerText = data.message;
+    
+                if (data.message === "Length is too short!") {
+                    resultElement.style.color = "red"; // Display error messages in red
+                } else {
+                    resultElement.style.color = "green"; // Display success message in green
+                }
+    
+                inputElement.value = ""; // ✅ Clear the input box after submission
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById("result").innerText = "Something went wrong!";
+                resultElement.innerText = "Something went wrong!";
+                resultElement.style.color = "red";
             });
         }
     </script>
+    
 </body>
 </html>
