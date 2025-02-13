@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CTF Challenge</title>
-    <script defer src="/script.js"></script>  <!-- Now it references directly -->
+    <!-- <script defer src="/script.js"></script> -->
 </head>
 <body>
     <h2>Enter the secret key:</h2>
@@ -12,4 +12,31 @@
     <button onclick="submitInput()">Submit</button>
     <p id="result"></p>
 </body>
+<script>
+    function submitInput() {
+    const input = document.getElementById("userInput").value;
+    console.log(input);
+    fetch('/check', {  // Ensure this matches the API route in `server.js`
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ input: input })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.text().then(text => { throw new Error(text); });
+        }
+        return response.json();
+    })
+    .then(data => {
+        document.getElementById("result").innerText = data.message;
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        document.getElementById("result").innerText = "Something went wrong!";
+    });
+}
+
+</script>
 </html>
