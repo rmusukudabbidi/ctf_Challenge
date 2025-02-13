@@ -66,7 +66,7 @@
 <body>
     <div class="container">
         <h2>Enter the String:</h2>
-        <input type="text" id="userInput" placeholder="Type here..." />
+        <input type="text" id="userInput" placeholder="Type here..." onclick="clearMessage()" />
         <button onclick="submitInput()">Submit</button>
         <p id="result"></p>
     </div>
@@ -78,7 +78,11 @@
     
             const input = inputElement.value;
             console.log(input);
-            
+    
+            // ✅ Reset the message every time the button is clicked
+            resultElement.innerText = "Processing...";
+            resultElement.style.color = "blue"; // Show a neutral color while waiting
+    
             fetch('/check', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -94,20 +98,27 @@
                 resultElement.innerText = data.message;
     
                 if (data.message === "Length is too short!") {
-                    resultElement.style.color = "red"; // Display error messages in red
+                    resultElement.style.color = "red"; // Show error message in red
                 } else {
-                    resultElement.style.color = "green"; // Display success message in green
+                    resultElement.style.color = "green"; // Show success message in green
                 }
-    
-                inputElement.value = ""; // ✅ Clear the input box after submission
             })
             .catch(error => {
                 console.error('Error:', error);
-                resultElement.innerText = "Something went wrong!";
+                resultElement.innerText = "Length is too short!";
                 resultElement.style.color = "red";
+            })
+            .finally(() => {
+                inputElement.value = ""; // ✅ Always clears the input box, success or error
             });
         }
+    
+        // ✅ Function to clear error message when user clicks the input box
+        function clearMessage() {
+            document.getElementById("result").innerText = "";
+        }
     </script>
+    
     
 </body>
 </html>
